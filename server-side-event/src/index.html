@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="send">发送消息</button>
+    <script>
+      const eventSource = new EventSource('/sse');
+      
+      eventSource.onmessage = ({ data }) => {
+        const message = document.createElement('li');
+        console.log('data-----', data);
+        message.innerText = 'New message: ' + data;
+        document.body.appendChild(message);
+      };
+
+      document.getElementById('send').addEventListener('click', () => {
+        fetch('/send');
+      });
+    </script>
+  </body>
+</html>
